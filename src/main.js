@@ -47,6 +47,9 @@ class Tree {
 class AcodePlugin {
 
   async init() {
+    editorManager.on('switch-file', () => {
+      const codeTree = new Tree(editorManager.activeFile.uri);
+    })
   }
 
   async destroy() {
