@@ -6,14 +6,14 @@ class Tree {
   constructor(pathToFile) {
     this.pathToFile = pathToFile;
     const readFilePromise = this._readFile(this.pathToFile);
-    readFilePromise.then(code => {
-      this.entities = this._buildTree(code);
-    })
-        .catch(error => console.log('Неудалось прочитать файл:', error.message) )
+    readFilePromise.then(console.log)
+        .catch(console.error)
   }
 
   async _readFile(pathToFile) {
-    return await fs(pathToFile).readFile();
+    const buffer = await fs(pathToFile).readFile();
+    const decoder = new TextDecoder();
+    return decoder.decode(buffer);
   }
 
   _buildTree(code) {
