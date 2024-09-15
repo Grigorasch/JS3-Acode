@@ -22,7 +22,7 @@ class Tree {
   _buildTree(code) {
     const entities = {};
     // TODO FIX Добавить автоматический подбор версии ecma на основе настроек в packagee=.json и прочих
-    const ast = acorn.parse(code, {ecmaVersion: 2020});
+    const ast = acorn.parse(code, {ecmaVersion: 2020, sourceType: "module"});
     ast.body.forEach(node => {
       if (node.type === 'VariableDeclaration') {
         node.declarations.forEach(declaration => {
