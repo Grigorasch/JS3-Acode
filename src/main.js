@@ -1,13 +1,16 @@
 import plugin from '../plugin.json';
-import acorn from "acorn";
+import * as acorn from "acorn";
 const fs = acode.require('fs');
 
 class Tree {
   constructor(pathToFile) {
     this.pathToFile = pathToFile;
     const readFilePromise = this._readFile(this.pathToFile);
-    readFilePromise.then(console.log)
-        .catch(console.error)
+    readFilePromise.then(code => {
+      this.entities = this._buildTree(code);
+      console.log(this.entities)
+    })
+        .catch(console.error);
   }
 
   async _readFile(pathToFile) {
