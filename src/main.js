@@ -33,13 +33,13 @@ class Tree {
     ast.body.forEach(node => {
       switch (node.type) {
         case "VariableDeclaration":
-          const varRange = new Range(node.loc.start.line-1, node.loc.start.column, node.loc.end.line-1, node.loc.end.column);
+          const varRange = getRangeByNodeLocation(node.loc);
           const varNamesList = [];
-          node.declarations.forEach(decloration => {
-            if (decloration.id.type === "Identifier") {
-              varNamesList.push(decloration.id.name);
-            } else if (decloration.id.type === "ObjectPattern") {
-              const varList = decloration.id.properties.map(property => property.key.name);
+          node.declarations.forEach(declaration => {
+            if (declaration.id.type === "Identifier") {
+              varNamesList.push(declaration.id.name);
+            } else if (declaration.id.type === "ObjectPattern") {
+              const varList = declaration.id.properties.map(property => property.key.name);
               varNamesList.push(...varList);
             }
           })
