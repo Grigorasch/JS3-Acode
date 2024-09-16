@@ -90,6 +90,15 @@ class AcodePlugin {
   }
 }
 
+/**
+ * Функция преобразует локацию сущности из координат acorn в Range редактора Ace
+ * @param {SourceLocation} nodeLocation - расположение определения сущности полученное от acorn
+ * @returns {Range} - Range диапазон в формате Ace
+ */
+function getRangeByNodeLocation(nodeLocation) {
+  return new Range(nodeLocation.start.line-1, nodeLocation.start.column, nodeLocation.end.line-1, nodeLocation.end.column);
+}
+
 if (window.acode) {
   const acodePlugin = new AcodePlugin();
   acode.setPluginInit(plugin.id, (baseUrl, $page, { cacheFileUrl, cacheFile }) => {
