@@ -29,6 +29,7 @@ class Tree {
     // TODO FIX Добавить автоматический подбор версии ecma на основе настроек в packagee=.json и прочих
     // TODO FIX Добавить автоматический подбор версии типа (модуль или скрипт) на основе настроек в packagee=.json и прочих
     const ast = acorn.parse(code, {ecmaVersion: 2020, sourceType: "module", locations: true,});
+    console.log('ast', ast);
     ast.body.forEach(node => {
       switch (node.type) {
         case "VariableDeclaration":
