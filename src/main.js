@@ -1,13 +1,14 @@
 import plugin from '../plugin.json';
+import {switchFileListener} from "./utils/editor_listeners";
 
 class AcodePlugin {
 
-  async init() {
-
+  async init($page, cacheFile, cacheFileUrl) {
+    editorManager.on("switch-file", await switchFileListener);
   }
 
   async destroy() {
-
+    editorManager.off("switch-file", switchFileListener);
   }
 }
 
