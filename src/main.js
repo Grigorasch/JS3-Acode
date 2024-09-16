@@ -69,7 +69,7 @@ class AcodePlugin {
 
   async init() {
     editorManager.on('switch-file', () => {
-      if (Uri.extname(editorManager.activeFile.name) !== '.js') return;
+      if (Url.extname(editorManager.activeFile.name) !== '.js') return;
       const codeTree = new Tree(editorManager.activeFile.cacheFile);
     })
   }
