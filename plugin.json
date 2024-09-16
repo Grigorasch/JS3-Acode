@@ -1,5 +1,5 @@
 {
-  "id": "acode.plugin",
+  "id": "com.acode.entity_tree_js.",
   "name": "Plugin",
   "main": "dist/main.js",
   "version": "1.0.0",
