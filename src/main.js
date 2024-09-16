@@ -35,7 +35,7 @@ class Tree {
           const varRange = new Range(node.loc.start.line, node.loc.start.column, node.loc.end.line, node.loc.end.column)
           const variable = {
             location: varRange,
-            text: editorManager.getSession().getTextRange(varRange),
+            text: editorManager.editor.getSession().getTextRange(varRange),
             name: node.declarations.map(decloration => decloration.id.name)
           }
           entities.variables.push(variable);
