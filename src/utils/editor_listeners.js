@@ -15,6 +15,7 @@ export function switchFileListener()  {
         editorManager.activeFile.entitiesList = new EntitiesList(editorManager.activeFile);
         // TODO ADD добавить сохранение кеша списка при сохранении файла
     }
+    console.log(editorManager.activeFile.entitiesList)
 }
 
 function saveCacheEntitiesList(editorFile) {
