@@ -33,11 +33,21 @@ class Tree {
     ast.body.forEach(node => {
       switch (node.type) {
         case "VariableDeclaration":
-          const varRange = new Range(node.loc.start.line-1, node.loc.start.column, node.loc.end.line-1, node.loc.end.column)
+          const varRange = new Range(node.loc.start.line-1, node.loc.start.column, node.loc.end.line-1, node.loc.end.column);
+          const varNamesList = [];
+          node.declarations.forEach(decloration => {
+            if (decloration.id.type === "Identifier") {
+              varNamesList.push(decloration.id.name);
+            } else if (decloration.id.type === "ObjectPattern") {
+              const varList = decloration.id.properties.map(property => property.key.name);
+              varNamesList.push(...varList);
+            }
+          })
+
           const variable = {
             location: varRange,
             text: editorManager.editor.getSession().getTextRange(varRange),
-            name: node.declarations.map(decloration => decloration.id.name)
+            name: varNamesList,
           }
           entities.variables.push(variable);
           break;
