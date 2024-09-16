@@ -33,7 +33,7 @@ class Tree {
     ast.body.forEach(node => {
       switch (node.type) {
         case "VariableDeclaration":
-          const varRange = new Range(node.loc.start.line, node.loc.start.column, node.loc.end.line, node.loc.end.column)
+          const varRange = new Range(node.loc.start.line-1, node.loc.start.column, node.loc.end.line-1, node.loc.end.column)
           const variable = {
             location: varRange,
             text: editorManager.editor.getSession().getTextRange(varRange),
