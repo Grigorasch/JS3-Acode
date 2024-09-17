@@ -55,6 +55,18 @@ export default class EntitiesList {
         ast.body.forEach(node => {
             // TODO ADD Добавить функии генератор
             switch (node.type) {
+                case "ImportDeclaration":
+                    const importDeclaration = this._parseImportDeclaration(node);
+                    entities.imports.push(importDeclaration)
+                    break;
+
+                case "ExportDefaultDeclaration":
+
+                case "ExportNamedDeclaration":
+                    const exportDeclaration = this._parseExportDeclaration(node);
+                    entities.exports.push(exportDeclaration);
+                    break;
+
                 case "VariableDeclaration":
                     const variableDeclaration = this._parseVariableDeclaration(node);
                     entities.variables.push(variableDeclaration);
