@@ -1,4 +1,5 @@
-import {Variable} from './entities_models.js';
+import {getRangeByNodeLocation} from "../utils/range_functions.js";
+import {Variable, Import} from './entities_models.js';
 
 class ParsingStrategy {
  parse(node) {
@@ -15,4 +16,20 @@ class VariableStrategy extends ParsingStrategy {
   }
 }
 
-export {VariableStrategy}
+class ImportStrategy extends ParsingStrategy {
+  parse(node) {
+    const range = getRangeByNodeLocation(node.loc);
+    const {start, end} = node;
+    const position = {start, end};
+    const source = node.source.value;
+    const identifiers = node.specifiers
+    .map(specifier => ({
+      name: specifier.local.name,
+      location: getRangeByNodeLocation(specifier.local.loc)
+    }));
+    return identifiers.map(identifier => new Import({range, position, source, identifier}));
+  }
+}
+
+const importStrategy = new ImportStrategy();
+export {importStrategy}

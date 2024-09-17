@@ -1,25 +1,19 @@
 import {getRangeByNodeLocation} from "../utils/range_functions.js";
 
-function Variable({name, location, type}) {
-    if (name && typeof name === 'object' && name.name && name.loc) {
-        this.name = this.setName(name.name, name.loc);
-    } else {
-        this.name = undefined;
-    }
-    this.location = location ? this.setLocation(location) : undefined;
-    this.type = this.setType(type);
+function Import({range, position, source, identifier}) {
+  this.range = range;
+  this.position = position;
+  this.source = source;
+  this.identifier = identifier;
+  this.type = 'import';
 }
 
-Variable.prototype.setName = function(name, loc) {
-    return {name, location: getRangeByNodeLocation(loc)};
+function Variable({range, position, kind}) {
+  this.range = range;
+  this.position = position;
+  this.kind = kind;
+  this.type = 'variable';
 }
 
-Variable.prototype.setLocation = function(location) {
-    return getRangeByNodeLocation(location);
-}
 
-Variable.prototype.setType = function(type) {
-    if (type === 'const' || type === 'let' || type === 'var') return type;
-}
-
-export {Variable};
+export {Import, Variable};

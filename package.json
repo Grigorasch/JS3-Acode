@@ -8,6 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "acorn": "^8.12.1",
+    "acorn-walk": "^8.3.4",
     "html-tag-js": "^1.1.22"
   },
   "devDependencies": {
