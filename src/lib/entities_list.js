@@ -43,20 +43,17 @@ export default class EntitiesList {
      */
     _buildList(code) {
         const entities = {
-            variables: [],
-            functions: [],
-            classes: []
+            imports: [], exports: [], variables: [], functions: [], classes: []
         };
 
         // TODO FIX Добавить автоматический подбор версии ecma на основе настроек в package.json и прочих
         // TODO FIX Добавить автоматический подбор версии типа (модуль или скрипт) на основе настроек в package.json и прочих
         const ast = acorn.parse(code, {
-            ecmaVersion: 2020,
-            sourceType: "module",
-            locations: true
+            ecmaVersion: 2020, sourceType: "module", locations: true
         });
         console.log("ast", ast);
         ast.body.forEach(node => {
+            // TODO ADD Добавить функии генератор
             switch (node.type) {
                 case "VariableDeclaration":
                     const variableDeclaration = this._parseVariableDeclaration(node);
@@ -77,6 +74,37 @@ export default class EntitiesList {
             }
         });
         return entities;
+    }
+
+    /**
+     * Извлекает сущность импорта из узла синтаксического дерева
+     * @param {Statement} node - узел синтаксического дерева
+     * @returns {{name: {name: string, location: Range}[], location: Range, text: string, source}}
+     * @private
+     */
+    _parseImportDeclaration(node) {
+        const importRange = getRangeByNodeLocation(node.loc);
+        const importNames = node.specifiers.map(specifier => ({
+            name: specifier.local.name,
+            location: getRangeByNodeLocation(specifier.local.loc)
+        }));
+        return {
+            name: [...importNames],
+            location: importRange,
+            text: getTextRange(importRange),
+            source: node.source.value
+        };
+    }
+
+    /**
+     * Извлекает сущность экспорта из узла синтаксического дерева
+     * @param {Statement} node - узел синтаксического дерева
+     * @returns {{name: {name: string, location: Range}[], location: Range, text: string, source}}
+     * @private
+     */
+    _parseExportDeclaration(node) {
+        const exportRange = getRangeByNodeLocation(node.loc);
+        // if ()
     }
 
     /**
