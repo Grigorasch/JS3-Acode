@@ -1,4 +1,4 @@
-import {getTextRange, getRangeByNodeLocation} from "../utils/range_functions.js";
+import {getRangeByNodeLocation, getTextRange} from "../utils/range_functions.js";
 import * as acorn from "acorn";
 
 const fs = acode.require("fs");
@@ -63,11 +63,13 @@ export default class EntitiesList {
                     entities.variables.push(variableDeclaration);
                     break;
 
+                    // TODO ADD добавить обработку коментариев
                 case "FunctionDeclaration":
                     const functionDeclaration = this._parseFunctionDeclaration(node);
                     entities.functions.push(functionDeclaration);
                     break;
 
+                    // TODO ADD Добавить обработку методов класса
                 case "ClassDeclaration":
                     const classDeclaration = this._parseClassDeclaration(node);
                     entities.classes.push(classDeclaration);
@@ -96,9 +98,7 @@ export default class EntitiesList {
         });
 
         return {
-            name: varNamesList,
-            location: varRange,
-            text: getTextRange(varRange)
+            name: varNamesList, location: varRange, text: getTextRange(varRange)
         };
     }
 
@@ -111,9 +111,7 @@ export default class EntitiesList {
     _parseFunctionDeclaration(node) {
         const funcRange = getRangeByNodeLocation(node.loc);
         return {
-            name: node.id.name,
-            location: funcRange,
-            text: getTextRange(funcRange)
+            name: node.id.name, location: funcRange, text: getTextRange(funcRange)
         };
     }
 
@@ -126,9 +124,7 @@ export default class EntitiesList {
     _parseClassDeclaration(node) {
         const classRange = getRangeByNodeLocation(node.loc);
         return {
-            name: node.id.name,
-            location: classRange,
-            text: getTextRange(classRange)
+            name: node.id.name, location: classRange, text: getTextRange(classRange)
         };
     }
 }
