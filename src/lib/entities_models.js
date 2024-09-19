@@ -1,5 +1,3 @@
-import {getRangeByNodeLocation} from "../utils/range_functions.js";
-
 function Import({range, position, source, identifier}) {
   this.range = range;
   this.position = position;
@@ -8,7 +6,7 @@ function Import({range, position, source, identifier}) {
   this.type = 'import';
 }
 
-function Variable({range, position, kind}) {
+function Variable({range, position, kind, identifiers}) {
   this.range = range;
   this.position = position;
   this.kind = kind;

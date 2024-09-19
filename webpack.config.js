@@ -28,6 +28,9 @@ module.exports = (env, options) => {
       filename: '[name].js',
       chunkFilename: '[name].js',
     },
+    resolve: {
+      extensions: ['.js'], // добавляем .js к разрешаемым расширениям
+    },
     module: {
       rules,
     },

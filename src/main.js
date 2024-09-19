@@ -3,11 +3,11 @@ import {switchFileListener} from "./utils/editor_listeners";
 
 class AcodePlugin {
 
-  async init($page, cacheFile, cacheFileUrl) {
-    editorManager.on("switch-file", await switchFileListener);
+  init($page, cacheFile, cacheFileUrl) {
+    editorManager.on("switch-file", switchFileListener);
   }
 
-  async destroy() {
+  destroy() {
     editorManager.off("switch-file", switchFileListener);
   }
 }

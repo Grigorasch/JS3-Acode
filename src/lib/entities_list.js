@@ -1,5 +1,6 @@
 import {getRangeByNodeLocation, getTextRange} from "../utils/range_functions.js";
 import * as acorn from "acorn";
+import {simple} from "acorn-walk";
 
 const fs = acode.require("fs");
 
@@ -31,6 +32,7 @@ export default class EntitiesList {
      */
     async _readFile(pathToFile) {
         const buffer = await fs(pathToFile).readFile();
+
         const decoder = new TextDecoder();
         return decoder.decode(buffer);
     }
@@ -42,8 +44,11 @@ export default class EntitiesList {
      * @private
      */
     _buildList(code) {
-        const entities = {
-            imports: [], exports: [], variables: [], functions: [], classes: []
+        const topLevelEntities = {
+            imports: {},
+            variables: {},
+            functions: {},
+            classes: {}
         };
 
         // TODO FIX Добавить автоматический подбор версии ecma на основе настроек в package.json и прочих
@@ -52,6 +57,32 @@ export default class EntitiesList {
             ecmaVersion: 2020, sourceType: "module", locations: true
         });
         console.log("ast", ast);
+
+        simple(ast, {
+            Program: node => {
+                node.body.forEach(child => {
+                    switch (child.type) {
+                        case "VariableDeclaration":
+                            simple(child, {
+                                VariableDeclarator(node) {
+
+                                }
+                            })
+                            break;
+
+                        case "FunctionDeclaration":
+
+                            break;
+
+                        case "ClassDeclaration":
+
+                            break;
+                    }
+                })
+            }
+        })
+
+
         ast.body.forEach(node => {
             // TODO ADD Добавить функии генератор
             switch (node.type) {
@@ -72,13 +103,13 @@ export default class EntitiesList {
                     entities.variables.push(variableDeclaration);
                     break;
 
-                    // TODO ADD добавить обработку коментариев
+                // TODO ADD добавить обработку коментариев
                 case "FunctionDeclaration":
                     const functionDeclaration = this._parseFunctionDeclaration(node);
                     entities.functions.push(functionDeclaration);
                     break;
 
-                    // TODO ADD Добавить обработку методов класса
+                // TODO ADD Добавить обработку методов класса
                 case "ClassDeclaration":
                     const classDeclaration = this._parseClassDeclaration(node);
                     entities.classes.push(classDeclaration);

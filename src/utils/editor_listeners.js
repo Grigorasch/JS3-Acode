@@ -1,5 +1,5 @@
 import EntitiesList from "../lib/entities_list.js";
-
+const walk = require("acorn-walk")
 const Url = acode.require("Url");
 
 /**
@@ -19,5 +19,5 @@ export function switchFileListener()  {
 }
 
 function saveCacheEntitiesList(editorFile) {
-
+  walk
 }

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Template for Acode plugin",
   "main": "dist/main.js",
+  "type": "module",
   "repository": "https://github.com/deadlyjack/acode-plugin.git",
   "author": "Ajit <me@ajitkumar.dev>",
   "license": "MIT",
