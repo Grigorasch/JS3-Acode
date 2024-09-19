@@ -1,5 +1,11 @@
-const { Range } = ace.require("ace/range");
+(function(){})()
 
+const { Range } = ace.require("ace/range");
+const {a,b}={a:5,b:7}
+const [c,d]=[1,2]
+let e,g;
+let h=hh=5;
+let i=j=k=l=5;
 /**
  * Получает текст в заданном диапазоне из редактора.
  *
